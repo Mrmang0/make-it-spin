@@ -53,7 +53,7 @@ let state = {
         this.context.strokeStyle = 'rgba(255,255,255,1.0)'
         this.context.globalAlpha = 1.0;
         this.context.lineWidth = 10;
-        this.mainPipeline = new this.classes.Pipeline(100);
+        this.mainPipeline = new this.classes.Pipeline(50);
     },
 
     classes: {
@@ -81,17 +81,18 @@ let state = {
 
             getCurrentPoint() {
                 const angle = this.currentPoint;
-                const center = {
-                    x: this.x,
-                    y: this.y 
-                }
-
-                const X = center.x + (this.radius * Math.cos(angle));
-                const Y = center.y + (this.radius * Math.sin(angle));
+                const X = this.x + (this.radius * Math.cos(angle));
+                const Y = this.y + (this.radius * Math.sin(angle));
                 return {
                     X,
                     Y
                 };
+            }
+        },
+
+        Rectangle: class DrawRectangle {
+            constructor() {
+
             }
         },
 
@@ -137,7 +138,6 @@ let state = {
                         this.iterator = this.startValue;
                 }
                 this.iterator = this.iterator + this.customIncrement;
-                console.log(this.iterator + this.customIncrement);
                 return this.iterator;
             }
         },
@@ -158,18 +158,18 @@ let state = {
                 const _this = this;
                 this.interval = setInterval(() => {
                     for (let func of _this.functions) {
-                        if (func.currentIteration == func.iterations - 1)
+                        if (func.currentIteration == func.iterations - 1) {
                             this.functions.splice(
                                 this.functions.indexOf(func)
                             );
-
+                        }
                         func.execute();
                         func.currentIteration++;
                     }
                 }, this.tickDelay);
             }
 
-            addFunction(func, iterations = -1) {
+            addFunction(func, iterations = -2) {
                 this.functions.push({
                     execute: func,
                     iterations: iterations,
@@ -189,27 +189,83 @@ let state = {
 state.initialize();
 state.mainPipeline.stopPipeline();
 const Circles = [];
-
+const Rectangle = []
 
 for (let i = 1; i < 3; i++) {
     Circles.push(
-        new state.classes.Arc(i * 100 * i, i * 10 * i, i * 10 + 5,
-            new state.classes.Iterator(Math.PI / 100, 2 * Math.PI, Math.PI / 100),
+        new state.classes.Arc(i * 40 * i, i * 40 * i, i * 10 + 5,
+            new state.classes.Iterator(Math.PI / 300, 2 * Math.PI, Math.PI / 300),
             () => {
                 state.misc.setLineColor(`255,255,255`, 1)
             }))
 }
 
+// for (let i = 1; i < 3; i++) {
+//     Circles.push(
+//         new state.classes.Arc(i * 20 * i, i * 20 * i, i * 10 + 5,
+//             new state.classes.Iterator(Math.PI / 100, 2 * Math.PI, Math.PI / 100),
+//             () => {
+//                 state.misc.setLineColor(`255,255,255`, 1)
+//             }))
+// }
+state.context.translate(400, 250);
 for (let i = 0; i < 1; i++) {
-    // const it = new state.classes.Iterator(0.8, 0.1, -0.01);
-    state.mainPipeline.addFunction(Circles[i].draw.bind(Circles[i]), 101);
-    state.mainPipeline.addFunction(Circles[i + 1].draw.bind(Circles[i + 1]), 101);
+    const it = new state.classes.Iterator(0.3, 0.01, -0.01);
+    state.mainPipeline.addFunction(Circles[i].draw.bind(Circles[i]), -2);
+    state.mainPipeline.addFunction(Circles[i + 1].draw.bind(Circles[i + 1]), -2);
+    // state.mainPipeline.addFunction(() => {
+    //     state.misc.setLineColor("255,255,255", it.get());
+    //     new state.classes.Line(Circles[i].getCurrentPoint(),
+    //         Circles[i + 1].getCurrentPoint()).draw();
+    // }, 101);
+
     state.mainPipeline.addFunction(() => {
-        state.misc.setLineColor("255,0,0", 0.5);
+        state.misc.setLineColor("255,255,255", it.get());
+        // state.misc.setRandomLineColor();
         new state.classes.Line(Circles[i].getCurrentPoint(),
             Circles[i + 1].getCurrentPoint()).draw();
-    }, 101);
+        state.context.rotate(Math.PI / 12);
+    }, -2);
 
 }
 
 state.mainPipeline.startPipeline();
+
+
+function PartyTime() {
+    state.context.translate(400, 250);
+    for (let i = 0; i < 1; i++) {
+        const it = new state.classes.Iterator(0.3, 0.01, -0.01);
+        state.mainPipeline.addFunction(Circles[i].draw.bind(Circles[i]), -2);
+        state.mainPipeline.addFunction(Circles[i + 1].draw.bind(Circles[i + 1]), -2);
+        state.mainPipeline.addFunction(() => {
+            state.misc.setLineColor("255,255,255", it.get());
+            // state.misc.setRandomLineColor();
+            new state.classes.Line(Circles[i].getCurrentPoint(), {
+                X: 200,
+                Y: 400
+            }).draw();
+            state.context.rotate(Math.PI / 4);
+        }, -2);
+
+    }
+}
+
+function SecondParty()
+{
+    state.context.translate(400, 250);
+for (let i = 0; i < 1; i++) {
+    const it = new state.classes.Iterator(0.3, 0.01, -0.01);
+    state.mainPipeline.addFunction(Circles[i].draw.bind(Circles[i]), -2);
+    state.mainPipeline.addFunction(Circles[i + 1].draw.bind(Circles[i + 1]), -2);
+    state.mainPipeline.addFunction(() => {
+        // state.misc.setLineColor("255,255,255", it.get());
+        state.misc.setRandomLineColor();
+        new state.classes.Line(Circles[i].getCurrentPoint(),
+            Circles[i + 1].getCurrentPoint()).draw();
+        state.context.rotate(Math.PI / 4);
+    }, -2);
+
+}
+
+}
