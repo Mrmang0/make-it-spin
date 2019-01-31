@@ -47,8 +47,14 @@ let state = {
     initialize: function () {
         const resolution = this.screenResolutionCounter();
         this.canvas = document.getElementById('main-canvas')
-        this.canvas.height = resolution.height * 100;
-        this.canvas.width = resolution.width * 100;
+        if (resolution.height || resolution.width) {
+            this.canvas.height = resolution.height * 100;
+            this.canvas.width = resolution.width * 100;
+        }
+        else{
+            this.canvas.height = 800;
+            this.canvas.width =  500;
+        }
         this.context = this.canvas.getContext('2d');
         this.context.strokeStyle = 'rgba(255,255,255,1.0)'
         this.context.globalAlpha = 1.0;
