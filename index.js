@@ -251,21 +251,20 @@ function PartyTime() {
     }
 }
 
-function SecondParty()
-{
+function SecondParty() {
     state.context.translate(400, 250);
-for (let i = 0; i < 1; i++) {
-    const it = new state.classes.Iterator(0.3, 0.01, -0.01);
-    state.mainPipeline.addFunction(Circles[i].draw.bind(Circles[i]), -2);
-    state.mainPipeline.addFunction(Circles[i + 1].draw.bind(Circles[i + 1]), -2);
-    state.mainPipeline.addFunction(() => {
-        // state.misc.setLineColor("255,255,255", it.get());
-        state.misc.setRandomLineColor();
-        new state.classes.Line(Circles[i].getCurrentPoint(),
-            Circles[i + 1].getCurrentPoint()).draw();
-        state.context.rotate(Math.PI / 4);
-    }, -2);
+    for (let i = 0; i < 1; i++) {
+        const it = new state.classes.Iterator(0.3, 0.01, -0.01);
+        state.mainPipeline.addFunction(Circles[i].draw.bind(Circles[i]), -2);
+        state.mainPipeline.addFunction(Circles[i + 1].draw.bind(Circles[i + 1]), -2);
+        state.mainPipeline.addFunction(() => {
+            // state.misc.setLineColor("255,255,255", it.get());
+            state.misc.setRandomLineColor();
+            new state.classes.Line(Circles[i].getCurrentPoint(),
+                Circles[i + 1].getCurrentPoint()).draw();
+            state.context.rotate(Math.PI / 4);
+        }, -2);
 
-}
+    }
 
 }
