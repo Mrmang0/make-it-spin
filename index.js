@@ -47,7 +47,7 @@ let state = {
     initialize: function () {
         const resolution = this.screenResolutionCounter();
         this.canvas = document.getElementById('main-canvas')
-        if (resolution.height || resolution.width) {
+        if (resolution) {
             this.canvas.height = resolution.height * 100;
             this.canvas.width = resolution.width * 100;
         }
