@@ -3,6 +3,7 @@ import Canvas from './App/classes/Canvas'
 import Arc from './App/classes/figures/Arc'
 import Iterator from './App/classes/processing/Iterator'
 import drawFan from './App/functions/fan'
+import tubes from './App/functions/tubes'
 
 // const iterator = new Iterator(
 //     0.01*Math.PI,
@@ -14,4 +15,5 @@ import drawFan from './App/functions/fan'
 // canvas.context.translate(400,250);
 // canvas.pipeline.add(arc.draw.bind(arc),0,()=>false);
 
-drawFan()
+drawFan();
+tubes();

@@ -1,11 +1,13 @@
 
 body{
     background: #000;
+    margin: auto;
+    text-align: center;
 }
 
-#main-canvas{
-    width: 100vw;
-    height: 100vh;
+.regular-canvas{
+    width: 800px;
+    height: 500px;
     background: #000;
     stroke: wheat;
 }

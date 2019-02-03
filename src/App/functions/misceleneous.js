@@ -24,3 +24,8 @@ export function setWhiteLineColor(context) {
 export async function setLineColor(context, rgb, a) {
     context.strokeStyle = `rgba(${rgb},${a})`;
 }
+
+export function setLineWidth(context,val)
+{
+    context.lineWidth = val;
+}
