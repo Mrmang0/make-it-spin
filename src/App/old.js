@@ -50,10 +50,9 @@ let state = {
         if (resolution) {
             this.canvas.height = resolution.height * 100;
             this.canvas.width = resolution.width * 100;
-        }
-        else{
+        } else {
             this.canvas.height = 800;
-            this.canvas.width =  500;
+            this.canvas.width = 500;
         }
         this.context = this.canvas.getContext('2d');
         this.context.strokeStyle = 'rgba(255,255,255,1.0)'
@@ -109,13 +108,12 @@ let state = {
             }
 
             draw() {
-                state.context.lineWidth = 2;
+                state.context.lineWidth = 4;
                 state.context.beginPath();
                 state.context.moveTo(this.startPoint.X, this.startPoint.Y);
                 state.context.lineTo(this.endPoint.X, this.endPoint.Y);
                 state.context.stroke();
             }
-
         },
 
         Iterator: class Iterator {
@@ -124,7 +122,6 @@ let state = {
                 this.startValue = val;
                 this.iterator = this.startValue;
                 this.limitator = lim;
-                this.Wrapper;
                 if (customInc)
                     this.customIncrement = customInc;
                 else
@@ -155,8 +152,9 @@ let state = {
                 else
                     this.tickDelay = 100;
                 this.functions = [];
-                this.startPipeline();
                 this.interval;
+                this.startPipeline();
+
 
             }
 
@@ -164,7 +162,7 @@ let state = {
                 const _this = this;
                 this.interval = setInterval(() => {
                     for (let func of _this.functions) {
-                        if (func.currentIteration == func.iterations - 1) {
+                        if (func.stopCondition()) {
                             this.functions.splice(
                                 this.functions.indexOf(func)
                             );
@@ -175,16 +173,31 @@ let state = {
                 }, this.tickDelay);
             }
 
-            addFunction(func, iterations = -2) {
+            addFunction(
+                func,
+                iterations = -2,
+                stopCondition = function () {
+                    if (currentIteration >= iterations)
+                        return true
+                    return false
+                }
+            ) {
                 this.functions.push({
                     execute: func,
                     iterations: iterations,
-                    currentIteration: 0
+                    currentIteration: 0,
+                    stopCondition: stopCondition
                 })
             }
 
             stopPipeline() {
                 clearInterval(this.interval);
+            }
+
+            setTickDelay(delay) {
+                this.stopPipeline();
+                this.tickDelay = delay;
+                this.startPipeline();
             }
         },
     },
@@ -193,7 +206,7 @@ let state = {
 }
 
 state.initialize();
-state.mainPipeline.stopPipeline();
+// state.mainPipeline.stopPipeline();
 const Circles = [];
 const Rectangle = []
 
@@ -214,28 +227,43 @@ for (let i = 1; i < 3; i++) {
 //                 state.misc.setLineColor(`255,255,255`, 1)
 //             }))
 // }
+
+
+const amount = 5;
+const iterator = new state.classes.Iterator(1, 100, 1);
+const lines = [];
+
 state.context.translate(400, 250);
-for (let i = 0; i < 1; i++) {
-    const it = new state.classes.Iterator(0.3, 0.01, -0.01);
-    state.mainPipeline.addFunction(Circles[i].draw.bind(Circles[i]), -2);
-    state.mainPipeline.addFunction(Circles[i + 1].draw.bind(Circles[i + 1]), -2);
-    // state.mainPipeline.addFunction(() => {
-    //     state.misc.setLineColor("255,255,255", it.get());
-    //     new state.classes.Line(Circles[i].getCurrentPoint(),
-    //         Circles[i + 1].getCurrentPoint()).draw();
-    // }, 101);
+state.misc.setLineColor("255,255,255", 0.01);
+state.mainPipeline.setTickDelay(5);
+state.mainPipeline.addFunction(() => {
+    const line = new state.classes.Line({
+        X: 0,
+        Y: 0
+    }, {
+        X: iterator.peek(),
+        Y: iterator.get()
+    });
 
-    state.mainPipeline.addFunction(() => {
-        state.misc.setLineColor("255,255,255", it.get());
-        // state.misc.setRandomLineColor();
-        new state.classes.Line(Circles[i].getCurrentPoint(),
-            Circles[i + 1].getCurrentPoint()).draw();
-        state.context.rotate(Math.PI / 12);
-    }, -2);
+    if (lines.length >= 3) {
 
-}
+        new state.classes.Line(lines[0], {
+            X: (iterator.peek() + 100) * Math.cos(Math.PI / 2),
+            Y: iterator.get()
+        }).draw();
+    } else{
 
-state.mainPipeline.startPipeline();
+    }
+
+    if (iterator.peek() == 100) {
+        state.context.rotate(Math.PI / 3);
+        lines.push(line.endPoint);
+    }
+
+
+}, 0, () => {
+    return false
+})
 
 
 function PartyTime() {
@@ -251,7 +279,7 @@ function PartyTime() {
                 X: 200,
                 Y: 400
             }).draw();
-            state.context.rotate(Math.PI / 4);
+            state.context.rotate(Math.PI / 3);
         }, -2);
 
     }
@@ -273,4 +301,29 @@ function SecondParty() {
 
     }
 
+}
+
+function ThirdParty() {
+    state.context.translate(400, 250);
+    for (let i = 0; i < 1; i++) {
+        const it = new state.classes.Iterator(0.3, 0.01, -0.01);
+        state.mainPipeline.addFunction(Circles[i].draw.bind(Circles[i]), -2);
+        state.mainPipeline.addFunction(Circles[i + 1].draw.bind(Circles[i + 1]), -2);
+        // state.mainPipeline.addFunction(() => {
+        //     state.misc.setLineColor("255,255,255", it.get());
+        //     new state.classes.Line(Circles[i].getCurrentPoint(),
+        //         Circles[i + 1].getCurrentPoint()).draw();
+        // }, 101);
+
+        state.mainPipeline.addFunction(() => {
+            state.misc.setLineColor("255,255,255", it.get());
+            // state.misc.setRandomLineColor();
+            new state.classes.Line(Circles[i].getCurrentPoint(),
+                Circles[i + 1].getCurrentPoint()).draw();
+            state.context.rotate(Math.PI / 12);
+        }, -2);
+
+    }
+
+    state.mainPipeline.startPipeline();
 }
