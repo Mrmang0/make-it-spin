@@ -1,0 +1,13 @@
+
+body{
+    background: #000;
+    margin: auto;
+    text-align: center;
+}
+
+.regular-canvas{
+    width: 800px;
+    height: 500px;
+    background: #000;
+    stroke: wheat;
+}
