@@ -7,7 +7,8 @@ import {
 
 export default function drawFan() {
     const lines = [];    
-    const canvas = new Canvas('fan', 'regular-canvas', 800, 500);
+    const wrapper = document.getElementsByClassName('wrapper')[0];
+    const canvas = new Canvas('fan', 'regular-canvas', 800, 500,wrapper);
     const iterator = new Iterator(1, 100, 1);
     canvas.context.translate(400, 250);
     setLineColor(canvas.context,"255,255,255", 0.01);

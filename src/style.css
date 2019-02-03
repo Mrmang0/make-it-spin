@@ -3,6 +3,8 @@ body{
     background: #000;
     margin: auto;
     text-align: center;
+    width: 100wh;
+    height: 100vh;
 }
 
 .regular-canvas{
@@ -10,4 +12,9 @@ body{
     height: 500px;
     background: #000;
     stroke: wheat;
+}
+
+.wrapper{
+    width: 50%;
+    height: 50%;
 }

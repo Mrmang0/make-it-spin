@@ -5,7 +5,7 @@ export function getRndInteger(min, max) {
 }
 
 export function getRndColor() {
-    return `${this.getRndInteger(1,255)},${this.getRndInteger(1,255)},${this.getRndInteger(1,255)}`;
+    return `${getRndInteger(1,255)},${getRndInteger(1,255)},${getRndInteger(1,255)}`;
 }
 
 export function setRandomLineColor(context) {

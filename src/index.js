@@ -4,6 +4,7 @@ import Arc from './App/classes/figures/Arc'
 import Iterator from './App/classes/processing/Iterator'
 import drawFan from './App/functions/fan'
 import tubes from './App/functions/tubes'
+import third from './App/functions/third'
 
 // const iterator = new Iterator(
 //     0.01*Math.PI,
@@ -17,3 +18,4 @@ import tubes from './App/functions/tubes'
 
 drawFan();
 tubes();
+third();

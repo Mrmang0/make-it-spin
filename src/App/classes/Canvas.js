@@ -13,6 +13,10 @@ export default class Canvas {
         this.canvas.height = height;
         this.canvas.classList.add(className);
         this.canvas.id = id;
+        this.center = {
+            X: width / 2,
+            Y: height / 2
+        }
         parent.appendChild(this.canvas);
         this.getContext();
         this.setStyle();
