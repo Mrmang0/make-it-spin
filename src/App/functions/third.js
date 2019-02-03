@@ -13,7 +13,7 @@ import Arc from '../classes/figures/Arc'
 export default function third() {
     const Circles = [];
     const wrapper = document.getElementsByClassName('wrapper')[0];
-    const canvas = new Canvas('tubes', 'regular-canvas', 1000, 600, wrapper);
+    const canvas = new Canvas('third', 'regular-canvas', 1000, 600, wrapper);
 
     canvas.context.translate(canvas.center.X, canvas.center.Y);
 

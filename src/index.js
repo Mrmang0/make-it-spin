@@ -5,17 +5,14 @@ import Iterator from './App/classes/processing/Iterator'
 import drawFan from './App/functions/fan'
 import tubes from './App/functions/tubes'
 import third from './App/functions/third'
+import fourth from './App/functions/fourth'
+import circle from './App/functions/circle';
 
-// const iterator = new Iterator(
-//     0.01*Math.PI,
-//     2*Math.PI,
-//     0.01*Math.PI)
-// const canvas = new Canvas('main-canvas', 'main-canvas', 800, 500);
-// const arc = new Arc(canvas.context,10,10,50,iterator);
 
-// canvas.context.translate(400,250);
-// canvas.pipeline.add(arc.draw.bind(arc),0,()=>false);
-
-drawFan();
+drawFan(1,1,12);
+drawFan(2,1,3);
+drawFan(2,1,8);
+circle();
 tubes();
 third();
+fourth();

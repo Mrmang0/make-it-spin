@@ -5,17 +5,17 @@ import {
     setLineColor
 } from '../functions/misceleneous'
 
-export default function drawFan(Kx,Ky,Kr) {
+export default function circle() {
     const lines = [];
-    const length = 200;
+    const length = 200;    
     const wrapper = document.getElementsByClassName('wrapper')[0];
-    const canvas = new Canvas('fan', 'regular-canvas', 1000, 1000, wrapper);
+    const canvas = new Canvas('fan', 'regular-canvas', 1000, 800,wrapper);
     const iterator = new Iterator(1, length, 1);
     canvas.context.translate(canvas.center.X, canvas.center.Y);
-    setLineColor(canvas.context, "255,255,255", 0.01);
+    setLineColor(canvas.context,"255,255,255", 0.01);
     canvas.pipeline.setTickDelay(5);
     canvas.pipeline.add(() => {
-        const line = new Line(canvas.context, {
+        const line = new Line(canvas.context,{
             X: 0,
             Y: 0
         }, {
@@ -25,16 +25,16 @@ export default function drawFan(Kx,Ky,Kr) {
 
         if (lines.length >= 3) {
 
-            new Line(canvas.context, lines[0], {
-                X: (iterator.peek() + length) * Math.cos(Math.PI / Kx),
-                Y: iterator.get() * Ky
+            new Line(canvas.context,lines[0], {
+                X: (iterator.peek() + length) * Math.cos(Math.PI / 4),
+                Y: iterator.get()
             }).draw();
         } else {
 
         }
 
         if (iterator.peek() == length) {
-            canvas.context.rotate(Math.PI / Kr);
+            canvas.context.rotate(Math.PI / 12);
             lines.push(line.endPoint);
         }
 
