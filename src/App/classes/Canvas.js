@@ -1,4 +1,5 @@
 import Pipeline from './processing/Pipeline'
+import Point from './additional/Point';
 
 export default class Canvas {
     constructor(
@@ -13,89 +14,37 @@ export default class Canvas {
         this.canvas.height = height;
         this.canvas.classList.add(className);
         this.canvas.id = id;
-        this.center = {
-            X: width / 2,
-            Y: height / 2
-        }
+        this.center = new Point(width / 2, height / 2)
         parent.appendChild(this.canvas);
         this.getContext();
         this.setStyle();
-        this.pipeline = new Pipeline(100);
+        this.pipeline = new Pipeline(17);
 
     }
 
     setStyle() {
         this.context.strokeStyle = 'rgba(255,255,255,1.0)'
         this.context.globalAlpha = 1.0;
-        this.context.lineWidth = 10;
+        this.context.lineWidth = 4;
     }
 
-
+    setColor(func) {
+        func();
+    }
 
     getContext(demension = '2d') {
         this.context = this.canvas.getContext(demension);
     }
 
+    moveTo(point) {
+        this.context.moveTo(point.X, point.Y);
+    }
+
+    lineTo(point) {
+        this.context.lineTo(point.X, point.Y);
+    }
+
+    clear() {
+        this.context.clearRect(0, 0, this.canvas.width, this.canvas.height);
+    }
 }
-
-// canvas: null,
-//     context: null,
-//     mainPipeline: null,
-
-//     misc: {
-//         getRndInteger: (min, max) => {
-//             return Math.floor(Math.random() * (max - min)) + min;
-//         },
-
-//         getRndColor: function () {
-//             return `${this.getRndInteger(1,255)},${this.getRndInteger(1,255)},${this.getRndInteger(1,255)}`;
-//         },
-
-//         setRandomLineColor: () => {
-//             const ite = new state.classes.Iterator(1.0, 1.0);
-//             state.misc.setLineColor(
-//                 state.misc.getRndColor(), 1)
-//         },
-
-//         setWhiteLineColor: () => {
-//             state.misc.setLineColor(
-//                 '255,255,255', 1)
-//         },
-
-//         setLineColor: async function (rgb, a) {
-//             state.context.strokeStyle = `rgba(${rgb},${a})`;
-//         },
-//     },
-
-//     screenResolutionCounter: function () {
-//         const width = window.screen.width;
-//         const height = window.screen.height;
-
-//         for (let i = 1; i < width / 20; i++) {
-//             for (let j = 1; j < height / 20; j++) {
-//                 if (width / i === height / j)
-//                     return {
-//                         width: i,
-//                         height: j
-//                     }
-//             }
-
-//         }
-//     },
-
-//     initialize: function () {
-//         const resolution = this.screenResolutionCounter();
-//         this.canvas = document.getElementById('main-canvas')
-//         if (resolution) {
-//             this.canvas.height = resolution.height * 100;
-//             this.canvas.width = resolution.width * 100;
-//         } else {
-//             this.canvas.height = 800;
-//             this.canvas.width = 500;
-//         }
-//         this.context = this.canvas.getContext('2d');
-//         this.context.strokeStyle = 'rgba(255,255,255,1.0)'
-//         this.context.globalAlpha = 1.0;
-//         this.context.lineWidth = 10;
-//         this.mainPipeline = new this.classes.Pipeline(50);
-//     },
