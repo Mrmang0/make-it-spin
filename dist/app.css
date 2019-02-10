@@ -1,0 +1,17 @@
+
+body{
+    background: #000;
+    text-align: center;
+   
+}
+
+.regular-canvas{
+    background: #000;
+}
+
+.wrapper{
+    margin: auto;
+    text-align: center;
+    width: 1280px
+   
+}

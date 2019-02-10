@@ -5,8 +5,8 @@ import {
     setRandomLineColor
 } from '../functions/misceleneous'
 import Canvas from '../classes/Canvas'
-import Line from '../classes/figures/Line'
-import Arc from '../classes/figures/Arc'
+import {DrawLine as Line} from '../classes/geometry/Line'
+import Arc from '../classes/geometry/Arc'
 
 
 export default function fourth() {

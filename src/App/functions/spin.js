@@ -2,50 +2,45 @@ import Canvas from '../classes/Canvas'
 import Iterator from '../classes/processing/Iterator';
 import rotate from '../classes/Geometry/Rotate'
 import Point from '../classes/additional/Point';
-import circle from './circle';
 import Circle from '../classes/additional/Circle';
+import Line from '../classes/geometry/Line'
+import {
+    getRndInteger
+} from './misceleneous';
 
 
 export default function spin() {
     const wrapper = document.getElementsByClassName('wrapper')[0];
     const canvas = new Canvas('spin', 'regular-canvas', 1000, 800, wrapper)
     const iterator = new Iterator(Math.PI / 100, 2 * Math.PI, Math.PI / 100)
+    const radius = 100;
 
+
+    canvas.pipeline.setTickDelay(10)
     canvas.pipeline.add(() => {
+        const circles = [
+            new Circle(new Point(300, 300), radius),
+            new Circle(new Point(600, 300), radius),
+            new Circle(new Point(600, 600), radius),
+            new Circle(new Point(300, 600), radius),
+          
+        ];
+
+        const circlePoints = [];
         canvas.clear();
         let angle = iterator.get()
-        const circles = [
-            new Circle(new Point(200, 200), 75),
-            new Circle(new Point(800, 200), 75),
-            new Circle(new Point(200, 600), 75),
-            new Circle(new Point(800, 600), 75)
-        ]
-        canvas.context.beginPath();
-        circles.map(circle => {
-            canvas.context.beginPath();
-            canvas.moveTo(circle.center);
-            circle.currentPoint = rotate.spinAroundCenter(circle.currentPoint, circle.center, angle);
-            canvas.lineTo(circle.currentPoint);
-           
-            console.log("ok");
+        circles.map(x => {
+            x.currentPoint = rotate.spinAroundCenter(x.currentPoint, x.center, angle, getRndInteger(-1, 1));
+            circlePoints.push(x.currentPoint);
         })
 
-        for (let i = 0; i < 4; i++) {
-            if (i == 0) {
-                canvas.context.beginPath();
-                canvas.moveTo(circles[0].currentPoint)
-            } else
-            if (i == 3)
-                canvas.lineTo(circles[0].currentPoint);
-            else
-                canvas.lineTo(circles[i].currentPoint);
-
-
-        }
-        canvas.context.stroke();
-
+        const lines = Line.GetLineArray(circlePoints);
+        canvas.beginPath();
+        lines.map(x => {
+            canvas.moveTo(x.startPoint);
+            canvas.lineTo(x.endPoint);
+        })
+        canvas.stroke();
     }, 10, x => false)
-
-
 
 }

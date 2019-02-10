@@ -1,5 +1,5 @@
 import Canvas from '../classes/Canvas'
-import Line from '../classes/figures/Line'
+import {DrawLine as Line} from '../classes/geometry/Line'
 import Iterator from '../classes/processing/Iterator'
 import {
     setLineColor

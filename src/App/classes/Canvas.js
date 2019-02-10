@@ -18,18 +18,26 @@ export default class Canvas {
         parent.appendChild(this.canvas);
         this.getContext();
         this.setStyle();
-        this.pipeline = new Pipeline(17);
+        this.pipeline = new Pipeline(30);
 
     }
 
     setStyle() {
-        this.context.strokeStyle = 'rgba(255,255,255,1.0)'
+        this.color = `255,255,255`
+        this.opacity = 1
+        this.context.strokeStyle = `rgba(${this.color},${this.opacity})`
         this.context.globalAlpha = 1.0;
         this.context.lineWidth = 4;
     }
 
-    setColor(func) {
-        func();
+    setColor(color) {
+        this.color = color;
+        this.context.strokeStyle = `rgba(${color},${this.opacity})`
+    }
+
+    setOpacity(opacity) {
+        this.opacity= opacity
+        this.context.strokeStyle = `rgba(${this.color},${opacity})`
     }
 
     getContext(demension = '2d') {
@@ -44,6 +52,13 @@ export default class Canvas {
         this.context.lineTo(point.X, point.Y);
     }
 
+    beginPath() {
+        this.context.beginPath();
+    }
+
+    stroke() {
+        this.context.stroke();
+    }
     clear() {
         this.context.clearRect(0, 0, this.canvas.width, this.canvas.height);
     }

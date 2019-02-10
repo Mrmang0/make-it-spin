@@ -5,9 +5,9 @@ import Point from '../additional/Point'
 
     }
 
-    spinAroundCenter(point, center, angle) {
-        let newX = center.X + (point.X - center.X) * Math.cos(angle) - (point.Y - center.Y) * Math.sin(angle);
-        let newY = center.Y + (point.Y - center.Y) * Math.cos(angle) + (point.X - center.X) * Math.sin(angle);
+    spinAroundCenter(point, center, angle,side=1) {
+        let newX = center.X +((side)* (point.X - center.X) * Math.cos(angle) - (point.Y - center.Y) * Math.sin(angle));
+        let newY = center.Y +((side)* (point.Y - center.Y) * Math.cos(angle) + (point.X - center.X) * Math.sin(angle));
         return new Point(newX, newY);
     }
 
