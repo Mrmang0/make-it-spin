@@ -20,8 +20,11 @@ export default class Pipeline {
                         this.functions.indexOf(func)
                     );
                 }
-                func.execute();
-                func.currentIteration++;
+                else{
+                    func.execute();
+                    func.currentIteration++;
+                }
+                
             }
         }, this.tickDelay);
     }

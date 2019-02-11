@@ -9,18 +9,22 @@ import majesticRotation, {
     majesticDuoRotation,
     fixedMajesticRotation,
 } from './App/functions/majestickRotation'
+import test from './App/functions/testField';
+import eclipse from './App/functions/eclipse';
 
 
 
 
-majesticRotation();
-majesticDuoRotation();
-fixedMajesticRotation();
-spin();
-drawFan(1, 1, 12);
-drawFan(2, 1, 3);
-drawFan(2, 1, 8);
-circle();
-tubes();
-third();
-fourth();
+test();
+// eclipse();
+// majesticRotation();
+// majesticDuoRotation();
+// fixedMajesticRotation();
+// spin();
+// drawFan(1, 1, 12);
+// drawFan(2, 1, 3);
+// drawFan(2, 1, 8);
+// circle();
+// tubes();
+// third();
+// fourth();

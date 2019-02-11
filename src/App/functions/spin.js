@@ -23,14 +23,18 @@ export default function spin() {
             new Circle(new Point(600, 300), radius),
             new Circle(new Point(600, 600), radius),
             new Circle(new Point(300, 600), radius),
-          
+
         ];
 
         const circlePoints = [];
         canvas.clear();
-        let angle = iterator.get()
+        // let angle = iterator.get()
         circles.map(x => {
-            x.currentPoint = rotate.spinAroundCenter(x.currentPoint, x.center, angle, getRndInteger(-1, 1));
+            let v = getRndInteger(-1, 1)
+            if (v == 0)
+                v = 1;
+
+            x.currentPoint = rotate.spinAroundCenter(x.currentPoint, x.center, iterator.get(), v);
             circlePoints.push(x.currentPoint);
         })
 

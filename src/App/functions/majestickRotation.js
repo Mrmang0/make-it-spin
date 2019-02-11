@@ -32,13 +32,13 @@ export default function majesticRotation() {
 export function majesticDuoRotation() {
     const wrapper = document.getElementsByClassName('wrapper')[0];
     const canvas = new Canvas('spin', 'regular-canvas', 1000, 800, wrapper)
-    const iterator = new Iterator(Math.PI / 360, 2 * Math.PI, Math.PI / 360)
+    const iterator = new Iterator(Math.PI / 720, 2 * Math.PI, Math.PI / 720)
     const radius = 200;
     const circles = [
         new Circle(new Point(500, 400), radius),
     ];
 
-    canvas.pipeline.setTickDelay(35);
+    canvas.pipeline.setTickDelay(16);
     canvas.pipeline.add(() => {
         canvas.beginPath();
         canvas.clear();

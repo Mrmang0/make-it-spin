@@ -9,10 +9,10 @@ import {
 } from './misceleneous';
 
 
-export default function test() {
+export default function eclipse() {
     const wrapper = document.getElementsByClassName('wrapper')[0];
     const canvas = new Canvas('spin', 'regular-canvas', 1000, 800, wrapper)
-    const iterator = new Iterator(Math.PI / 720,4* Math.PI, Math.PI / 720)
+    const iterator = new Iterator(Math.PI / 720,2* Math.PI, Math.PI / 720)
     const rI = new Iterator(1,300,1);
     const radius = 100;
     // canvas.setColor(`255,192,203`);
@@ -21,9 +21,7 @@ export default function test() {
     canvas.pipeline.add(() => {
         const circles = [
             new Circle(new Point(300, 300), radius),
-            // new Circle(new Point(600, 300), radius),
-            new Circle(new Point(600, 600), radius),
-            // new Circle(new Point(300, 600), radius),
+            new Circle(new Point(600, 600), radius/4),
 
         ];
 
@@ -31,7 +29,6 @@ export default function test() {
         let bl = 1
         canvas.setOpacity(0.01);
         // canvas.clear();
-        // let angle = iterator.get()
         circles.map(x => {
             x.currentPoint = rotate.spinAroundCenter(x.currentPoint, canvas.center, iterator.getSmooth(), 1)
             circlePoints.push(x.currentPoint);
@@ -44,6 +41,6 @@ export default function test() {
             canvas.lineTo(x.endPoint);
         })
         canvas.stroke();
-    }, 10, x => iterator.rounds > 1);
+    }, 10, x => iterator.rounds == 1);
 
 }
